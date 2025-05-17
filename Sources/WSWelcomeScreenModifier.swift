@@ -2,7 +2,7 @@ import SwiftUI
 import os
 
 private let logger = Logger(
-    subsystem: "com.weisen.vlmind",
+    subsystem: "com.weisen.WSOnBoarding",
     category: "WelcomeScreen"
 )
 

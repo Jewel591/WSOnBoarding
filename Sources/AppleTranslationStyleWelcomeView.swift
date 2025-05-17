@@ -2,21 +2,21 @@ import SwiftUI
 import os
 
 private let logger = Logger(
-    subsystem: "com.weisen.vlmind",
+    subsystem: "com.weisen.WSOnBoarding",
     category: "AppleWelcomeView"
 )
 
-struct AppleTranslationStyleWelcomeView: View {
+public struct AppleTranslationStyleWelcomeView: View {
     @Environment(\.dismiss) private var dismiss
 
     /// 显示内容和样式配置
     var config: WSWelcomeConfig
 
-    init(config: WSWelcomeConfig) {
+    public init(config: WSWelcomeConfig) {
         self.config = config
     }
 
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 0) {
             // 顶部App图标
             VStack {
@@ -172,8 +172,9 @@ extension AppleTranslationStyleWelcomeView {
 
         return WSWelcomeConfig(
             appName: "VLMind",
-            features: features
-        ).withSymbol("camera.viewfinder")
+            features: features,
+            iconSymbol: "camera.viewfinder"
+        )
     }
 }
 
@@ -181,25 +182,4 @@ extension AppleTranslationStyleWelcomeView {
     AppleTranslationStyleWelcomeView(
         config: AppleTranslationStyleWelcomeView.previewConfig
     )
-}
-
-// SwiftUI视图扩展，用于在使用时添加图标
-extension AppleTranslationStyleWelcomeView {
-    /// 设置自定义SF符号作为图标
-    /// - Parameter symbol: SF符号名称
-    /// - Returns: 更新后的视图
-    func withSymbol(_ symbol: String) -> Self {
-        var view = self
-        view.config.iconSymbol = symbol
-        return view
-    }
-
-    /// 设置Assets中的图片作为图标
-    /// - Parameter name: Assets中的图片名称
-    /// - Returns: 更新后的视图
-    func withIcon(_ name: String) -> Self {
-        var view = self
-        view.config.iconName = name
-        return view
-    }
 }

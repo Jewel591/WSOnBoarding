@@ -50,13 +50,30 @@ public struct AppleTranslationStyleWelcomeView: View {
             }
             .padding(.bottom, 40)
 
-            // 功能列表
-            VStack(alignment: .leading, spacing: 30) {
-                ForEach(config.features) { feature in
-                    FeatureRow(feature: feature)
+            // 功能列表 - 根据条目数量采用不同的显示方式
+            if config.features.count == 1,
+                let singleFeature = config.features.first
+            {
+                // 单条功能项 - 采用大字体居中显示，不显示图标和标题
+                if let description = singleFeature.description {
+                    Text(description)
+                        .font(.title3)
+                        .lineSpacing(5)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.primary)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, 40)
+                        .padding(.bottom, 20)
                 }
+            } else {
+                // 多条功能项 - 保持原有的显示方式
+                VStack(alignment: .leading, spacing: 30) {
+                    ForEach(config.features) { feature in
+                        FeatureRow(feature: feature)
+                    }
+                }
+                .padding(.horizontal, 24)
             }
-            .padding(.horizontal, 24)
 
             Spacer()
 
@@ -199,10 +216,43 @@ extension AppleTranslationStyleWelcomeView {
             config: iconNamePreviewConfig
         )
     }
+
+    // 单条功能项的预览示例 - 复现Siri隐私页面
+    fileprivate static var singleFeatureConfig: WSWelcomeConfig {
+        return WSWelcomeConfig(
+            appName: "Siri与听写",
+            introText: nil,
+            features: [
+                FeatureItem(
+                    title: "隐私声明",  // 标题不会显示，但需要提供
+                    description:
+                        "允许Apple储存并查看你在这台iPhone及其连接的Apple Watch、HomePod或支持Siri的配件上，与Siri、\"听写\"和\"翻译\"的音频交互和听写文本，帮助改进Siri和\"听写\"。你可以稍后在设置中更改。",
+                    color: .blue  // 颜色不会显示，但需要提供
+                )
+            ],
+            iconSymbol: "mic.circle.fill",
+            primaryColor: .pink,
+            continueButtonText: "继续",
+            disclaimerText:
+                "你的设备、搜索、服务、浏览、购买、Apple Store购物活动和设备信任状态可能被用于个性化你的体验、发送你通知、提供和改进商店，以及防止欺诈。"
+        )
+    }
+
+    static var singleFeaturePreview: some View {
+        AppleTranslationStyleWelcomeView(
+            config: singleFeatureConfig
+        )
+    }
 }
 
-#Preview {
+#Preview("默认样式") {
     AppleTranslationStyleWelcomeView(
         config: AppleTranslationStyleWelcomeView.previewConfig
+    )
+}
+
+#Preview("单条功能项") {
+    AppleTranslationStyleWelcomeView(
+        config: AppleTranslationStyleWelcomeView.singleFeatureConfig
     )
 }

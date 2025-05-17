@@ -8,18 +8,18 @@ import SwiftUI
 /// 3. 最后使用默认图标
 public struct WSWelcomeIconView: View {
     let config: WSWelcomeConfig
-    
+
     public init(config: WSWelcomeConfig) {
         self.config = config
     }
-    
+
     public var body: some View {
         // 图标容器
         ZStack {
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.black)
+                .fill(config.primaryColor)
                 .frame(width: 80, height: 80)
-            
+
             // 优先使用 iconName (Assets中的图片)
             if let appIconName = config.iconName {
                 Image(appIconName)
@@ -55,20 +55,24 @@ public struct WSWelcomeIconView: View {
 #Preview("Icon Component") {
     VStack(spacing: 20) {
         // 使用SF Symbol
-        WSWelcomeIconView(config: WSWelcomeConfig(
-            appName: "测试",
-            features: [],
-            iconSymbol: "star.fill"
-        ))
-        
+        WSWelcomeIconView(
+            config: WSWelcomeConfig(
+                appName: "测试",
+                features: [],
+                iconSymbol: "star.fill"
+            )
+        )
+
         // 使用默认图标
-        WSWelcomeIconView(config: WSWelcomeConfig(
-            appName: "测试",
-            features: []
-        ))
-        
+        WSWelcomeIconView(
+            config: WSWelcomeConfig(
+                appName: "测试",
+                features: []
+            )
+        )
+
         Text("图标组件预览")
             .font(.headline)
     }
     .padding()
-} 
+}

@@ -1,10 +1,12 @@
 # WSOnBoarding
 
-基于纯SwiftUI构建，通过一行代码为应用添加符合Apple设计规范的欢迎页面。
+[![中文](https://img.shields.io/badge/语言-中文-red.svg)](README.md) [![English](https://img.shields.io/badge/Language-English-blue.svg)](README_EN.md)
+
+基于纯 SwiftUI 构建，通过一行代码为应用添加符合 Apple 设计规范的欢迎页面。
 
 ## 核心亮点
 
-- 纯SwiftUI实现，支持iOS/iPadOS/macOS
+- 纯 SwiftUI 实现，支持 iOS/iPadOS/macOS
 - 一行代码集成
 - 自动管理显示逻辑
 - 跨设备同步（即将推出）
@@ -17,7 +19,7 @@
 
 在 Xcode 中添加依赖项：
 1. 选择菜单 `File` > `Add Packages...`
-2. 输入仓库URL：`https://github.com/Jewel591/WSOnBoarding`
+2. 输入仓库 URL：`https://github.com/Jewel591/WSOnBoarding`
 3. 保持默认选项，点击完成。
 
 ## 使用
@@ -82,7 +84,7 @@ extension WSWelcomeConfig {
 import WSOnBoarding
 ```
 
-然后在 WindowGroup 的 View 组件上添加 `.wsWelcomeView`修饰器：
+然后在 WindowGroup 的 View 组件上添加 `.wsWelcomeView` 修饰器：
 
 ```swift
 // YourApp.swift
@@ -111,7 +113,7 @@ struct YourApp: App {
 
 `.wsWelcomeView()` 支持通过 `iconName` 或 `iconSymbol` 参数设置显示的图标。
 
-`iconName` 的优先级高于`iconSymbol`。
+`iconName` 的优先级高于 `iconSymbol`。
 
 ### 使用 App 应用图标
 
@@ -272,7 +274,7 @@ features: [
 
 ## 参数说明
 
-`WSWelcomeConfig`提供多种配置选项来自定义欢迎页面：
+`WSWelcomeConfig` 提供多种配置选项来自定义欢迎页面：
 
 ### 基本配置
 
@@ -281,14 +283,14 @@ features: [
 | appName | String | 应用名称 |
 | introText | String? | 介绍文本，显示在标题下方 |
 | features | [FeatureItem] | 功能项数组 |
-| customTitle | String? | 自定义标题，默认为"欢迎使用{appName}" |
+| customTitle | String? | 自定义标题，默认为 "欢迎使用{appName}" |
 
 ### 图标配置
 
 | 参数 | 类型 | 描述 |
 |------|------|------|
-| iconName | String? | Assets中的图标名称 (优先) |
-| iconSymbol | String? | SF Symbol图标名称 |
+| iconName | String? | Assets 中的图标名称 (优先) |
+| iconSymbol | String? | SF Symbol 图标名称 |
 
 ### 样式配置
 

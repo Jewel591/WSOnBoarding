@@ -11,57 +11,103 @@
 
 ## 截图预览
 
-*添加你的截图*
+![](./Sources/images/Apple-Vision-Pro-Apple-Immersive-Video-Boundless-Arctic-Surfing_big.jpg.large_2x.jpg)
 
-## 安装方法
+## 安装
 
-### Swift Package Manager
+### 通过 Swift Package Manager 安装
 
-在Xcode中添加依赖项：
+在 Xcode 中添加依赖项：
 1. 选择菜单 `File` > `Add Packages...`
 2. 输入仓库URL：`https://github.com/Jewel591/WSOnBoarding`
-3. 选择 "Up to Next Major Version"
+3. 保持默认选项，点击完成。
 
+## 使用
 
-## 使用方法
+### 基本用法（最佳实践）
 
-只需几行代码即可在您的应用中添加精美的欢迎页面：
+为了更好地组织代码，我强烈建议创建一个独立的文件，专门用于设置用于欢迎页面显示的信息：
+
+#### 1. 创建配置文件
+
+> *你可以直接将下面这个模板文件复制到你的 Xcode 项目中。我一般会放在 OnBoarding 目录下。*
 
 ```swift
+// WelcomeConfig.swift
 import SwiftUI
 import WSOnBoarding
 
-struct ContentView: View {
-    var body: some View {
-        MainAppContent()
-            .wsWelcomeView(config: createWelcomeConfig())
-    }
-    
-    func createWelcomeConfig() -> WSWelcomeConfig {
-        let features = [
-            FeatureItem(
-                icon: "star.fill", 
-                title: "核心功能", 
-                description: "功能描述", 
-                color: .blue
-            ),
-            FeatureItem(
-                icon: "lock.shield", 
-                title: "安全保障", 
-                description: "隐私与安全", 
-                color: .green
-            )
-        ]
-        
+// 扩展 WSOnBoarding 库中的 WSWelcomeConfig
+extension WSWelcomeConfig {
+    /// 应用的欢迎页配置
+    static var welcomeInfo: WSWelcomeConfig {
         return WSWelcomeConfig(
-            appName: "我的应用",
-            introText: "欢迎使用这个应用，它将为您提供...",
-            features: features,
-            iconSymbol: "app.gift"
+            appName: "VLMind",
+            introText: nil,
+            features: [
+                FeatureItem(
+                    icon: "photo.on.rectangle",
+                    title: "视觉识别",
+                    description: "选取并识别图像中的内容。",
+                    color: .blue
+                ),
+                FeatureItem(
+                    icon: "bolt.fill",
+                    title: "毫秒级响应",
+                    description: "超快速分析，无需等待即可获得结果。",
+                    color: .orange
+                ),
+                FeatureItem(
+                    icon: "wifi.slash",
+                    title: "离线支持",
+                    description: "无需联网，在本地设备上完成所有处理。",
+                    color: .green
+                ),
+            ],
+            iconSymbol: "camera.viewfinder",
+            iconName: "AppIcon",
+            backgroundImageName: nil,
+            primaryColor: .blue,
+            continueButtonText: "继续",
+            disclaimerText:
+                "你的设备信息和使用数据将用于提供个性化体验、改进应用功能和防止欺诈。查看详细隐私政策了解更多信息。"
         )
     }
 }
 ```
+
+#### 2. 在 App 文件中应用
+
+首先，在 App 文件中导入 `WSOnBoarding`：
+
+```
+import WSOnBoarding
+```
+
+然后在 WindowGroup 的 View 组件上添加 `.wsWelcomeView`修饰器：
+
+```swift
+// YourApp.swift
+import SwiftUI
+import WSOnBoarding
+
+@main
+struct YourApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .wsWelcomeView(
+                    config: WSWelcomeConfig.welcomeInfo, // 要显示的应用信息
+                    style: .standard // 预设的外观风格（.standard 或 .immersive）
+                )
+        }
+    }
+}
+```
+
+至此，就完成了所有配置工作，wsWelcomeView 会自动管理显示逻辑（默认仅显示一次）。当然，默认支持深色模式。
+
+![](./Sources/images/411shots_so.png)
 
 ## 配置选项
 

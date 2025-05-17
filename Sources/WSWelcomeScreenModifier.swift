@@ -15,7 +15,8 @@ public enum WSWelcomeStyle {
 }
 
 public struct WSWelcomeScreenModifier: ViewModifier {
-    @State private var showWelcome: Bool = false
+    @State private var showStandardWelcome: Bool = false
+    @State private var showImmersiveWelcome: Bool = false
     
     // 内容和样式配置
     let config: WSWelcomeConfig
@@ -41,25 +42,24 @@ public struct WSWelcomeScreenModifier: ViewModifier {
             .task {
                 checkAndShowWelcome()
             }
+            // 标准样式使用sheet展示
             .sheet(
-                isPresented: $showWelcome,
+                isPresented: $showStandardWelcome,
                 onDismiss: {
                     markWelcomeAsSeen()
                 }
             ) {
-                welcomeView
+                AppleTranslationStyleWelcomeView(config: config)
             }
-    }
-    
-    /// 根据选择的样式返回对应的欢迎页面
-    @ViewBuilder
-    private var welcomeView: some View {
-        switch style {
-        case .standard:
-            AppleTranslationStyleWelcomeView(config: config)
-        case .immersive:
-            WSFinalCutStyleWelcomeView(config: config)
-        }
+            // 沉浸式样式使用fullScreenCover展示
+            .fullScreenCover(
+                isPresented: $showImmersiveWelcome,
+                onDismiss: {
+                    markWelcomeAsSeen()
+                }
+            ) {
+                WSFinalCutStyleWelcomeView(config: config)
+            }
     }
 
     private func checkAndShowWelcome() {
@@ -67,7 +67,13 @@ public struct WSWelcomeScreenModifier: ViewModifier {
         if !hasSeenWelcome {
             logger.info("首次启动应用，显示欢迎页面")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                showWelcome = true
+                // 根据样式选择适当的展示方式
+                switch style {
+                case .standard:
+                    showStandardWelcome = true
+                case .immersive:
+                    showImmersiveWelcome = true
+                }
             }
         } else {
             logger.info("用户已经看过欢迎页面，不再显示")

@@ -14,27 +14,32 @@ public struct WSWelcomeIconView: View {
     }
 
     public var body: some View {
-        // 图标容器
-        ZStack {
-            RoundedRectangle(cornerRadius: 16)
-                .fill(config.primaryColor)
+        // 使用@ViewBuilder根据不同情况显示不同视图
+        if let appIconName = config.iconName {
+            // 优先使用Assets中的应用图标 - 无背景
+            Image(appIconName)
+                .resizable()
+                .scaledToFit()
                 .frame(width: 80, height: 80)
-
-            // 优先使用 iconName (Assets中的图片)
-            if let appIconName = config.iconName {
-                Image(appIconName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50, height: 50)
-            }
-            // 其次使用 SF Symbol
-            else if let customSymbol = config.iconSymbol {
+                .cornerRadius(80*0.205)
+        } else if let customSymbol = config.iconSymbol {
+            // 其次使用SF Symbol图标 - 带背景
+            ZStack {
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(config.primaryColor)
+                    .frame(width: 80, height: 80)
+                
                 Image(systemName: customSymbol)
                     .font(.system(size: 36))
                     .foregroundColor(.white)
             }
-            // 最后使用默认图标
-            else {
+        } else {
+            // 最后使用默认图标 - 带背景
+            ZStack {
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(config.primaryColor)
+                    .frame(width: 80, height: 80)
+                
                 // 默认图标 - 视觉相关图标
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)

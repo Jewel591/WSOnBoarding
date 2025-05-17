@@ -23,37 +23,8 @@ public struct AppleTranslationStyleWelcomeView: View {
                 Spacer()
                     .frame(height: 40)
 
-                // 图标容器
-                ZStack {
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.black)
-                        .frame(width: 80, height: 80)
-
-                    if let customSymbol = config.iconSymbol {
-                        // 使用提供的SF符号
-                        Image(systemName: customSymbol)
-                            .font(.system(size: 36))
-                            .foregroundColor(.white)
-                    } else if let appIconName = config.iconName {
-                        // 使用提供的图标名称(来自Assets)
-                        Image(appIconName)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                    } else {
-                        // 默认图标 - VLMind视觉相关图标
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(config.secondaryColor.opacity(0.9))
-                                .frame(width: 44, height: 44)
-
-                            Image(systemName: "eyes")
-                                .font(.system(size: 24))
-                                .symbolVariant(.fill)
-                                .foregroundColor(.white)
-                        }
-                    }
-                }
+                // 使用独立的图标组件
+                WSWelcomeIconView(config: config)
 
                 Spacer()
                     .frame(height: 30)
@@ -66,6 +37,16 @@ public struct AppleTranslationStyleWelcomeView: View {
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 24)
+
+                // 介绍文本 - 仅当提供时显示
+                if let introText = config.introText {
+                    Text(introText)
+                        .font(.body)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 24)
+                        .padding(.top, 8)
+                }
             }
             .padding(.bottom, 40)
 
@@ -123,23 +104,28 @@ struct FeatureRow: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
-            // 图标容器
-            Image(systemName: feature.icon)
-                .font(.system(size: 24, weight: .semibold))
-                .foregroundColor(.white)
-                .frame(width: 44, height: 44)
-                .background(feature.color)
-                .cornerRadius(10)
+            // 图标容器 - 仅当有图标时显示
+            if let iconName = feature.icon {
+                Image(systemName: iconName)
+                    .font(.system(size: 24, weight: .semibold))
+                    .foregroundColor(.white)
+                    .frame(width: 44, height: 44)
+                    .background(feature.color)
+                    .cornerRadius(10)
+            }
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(feature.title)
                     .font(.headline)
                     .fontWeight(.semibold)
 
-                Text(feature.description)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .lineLimit(2)
+                // 描述文本 - 仅当有描述时显示
+                if let description = feature.description {
+                    Text(description)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .lineLimit(2)
+                }
             }
         }
         .contentShape(Rectangle())
@@ -156,24 +142,47 @@ extension AppleTranslationStyleWelcomeView {
                 description: "选取并识别图像中的内容。",
                 color: .blue
             ),
+            // 不带图标的功能
             FeatureItem(
-                icon: "bolt.fill",
-                title: "毫秒级响应",
+                icon: nil,
+                title: "快速响应",
                 description: "超快速分析，无需等待即可获得结果。",
                 color: .orange
             ),
+            // 不带描述的功能
             FeatureItem(
                 icon: "wifi.slash",
                 title: "离线支持",
-                description: "无需联网，在本地设备上完成所有处理。",
                 color: .green
             ),
         ]
 
         return WSWelcomeConfig(
             appName: "VLMind",
+            introText: "VLMind 利用先进的视觉模型，在本地设备上提供高效准确的图像识别服务，保护您的隐私安全。",
             features: features,
+            // 如果要测试iconName，可以取消下面这行的注释并提供一个Assets中存在的图片名称
+            // iconName: "YourAppIcon",
             iconSymbol: "camera.viewfinder"
+        )
+    }
+}
+
+// 另一个使用iconName的预览示例
+extension AppleTranslationStyleWelcomeView {
+    fileprivate static var iconNamePreviewConfig: WSWelcomeConfig {
+        return WSWelcomeConfig(
+            appName: "图标示例",
+            introText: "这个示例展示了使用Assets中图标的效果",
+            features: [],
+            iconName: "AppIconPreview" // 需要在Assets中添加这个图标
+        )
+    }
+    
+    // 如需查看iconName效果，可以启用此预览
+    static var iconNamePreview: some View {
+        AppleTranslationStyleWelcomeView(
+            config: iconNamePreviewConfig
         )
     }
 }

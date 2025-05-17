@@ -3,7 +3,7 @@ import XCTest
 
 final class WSOnBoardingTests: XCTestCase {
     func testFeatureItemCreation() {
-        // 测试创建一个功能项目
+        // 测试创建一个完整的功能项目
         let feature = FeatureItem(
             icon: "star.fill",
             title: "测试功能",
@@ -14,6 +14,40 @@ final class WSOnBoardingTests: XCTestCase {
         XCTAssertEqual(feature.icon, "star.fill")
         XCTAssertEqual(feature.title, "测试功能")
         XCTAssertEqual(feature.description, "这是一个测试功能描述")
+    }
+    
+    func testFeatureItemWithOptionalFields() {
+        // 测试创建没有图标的功能项
+        let featureNoIcon = FeatureItem(
+            title: "无图标功能",
+            description: "这个功能没有图标",
+            color: .red
+        )
+        
+        XCTAssertNil(featureNoIcon.icon)
+        XCTAssertEqual(featureNoIcon.title, "无图标功能")
+        XCTAssertEqual(featureNoIcon.description, "这个功能没有图标")
+        
+        // 测试创建没有描述的功能项
+        let featureNoDescription = FeatureItem(
+            icon: "gear",
+            title: "无描述功能",
+            color: .green
+        )
+        
+        XCTAssertEqual(featureNoDescription.icon, "gear")
+        XCTAssertEqual(featureNoDescription.title, "无描述功能")
+        XCTAssertNil(featureNoDescription.description)
+        
+        // 测试只有标题的功能项
+        let featureMinimal = FeatureItem(
+            title: "最简功能",
+            color: .blue
+        )
+        
+        XCTAssertNil(featureMinimal.icon)
+        XCTAssertEqual(featureMinimal.title, "最简功能")
+        XCTAssertNil(featureMinimal.description)
     }
     
     func testWelcomeConfigDefaults() {
@@ -42,8 +76,10 @@ final class WSOnBoardingTests: XCTestCase {
     
     func testWelcomeConfigWithAllParameters() {
         // 测试所有参数都设置的情况
+        let introText = "这是一段介绍文本，用于说明应用的功能和数据使用情况。"
         let config = WSWelcomeConfig(
             appName: "完整测试",
+            introText: introText,
             features: [],
             iconSymbol: "gear",
             iconName: "customIcon",
@@ -56,6 +92,7 @@ final class WSOnBoardingTests: XCTestCase {
         )
         
         XCTAssertEqual(config.appName, "完整测试")
+        XCTAssertEqual(config.introText, introText)
         XCTAssertEqual(config.iconSymbol, "gear")
         XCTAssertEqual(config.iconName, "customIcon")
         XCTAssertEqual(config.continueButtonText, "开始使用")

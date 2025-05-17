@@ -3,7 +3,7 @@ import os
 
 private let logger = Logger(
     subsystem: "com.weisen.WSOnBoarding",
-    category: "FinalCutWelcomeView"
+    category: "ImmersiveWelcomeView"
 )
 
 /// 采用沉浸式风格的欢迎页面
@@ -12,7 +12,7 @@ private let logger = Logger(
 /// - 大标题位于顶部
 /// - 详细描述位于底部
 /// - 底部渐变背景增强文字可读性
-public struct WSFinalCutStyleWelcomeView: View {
+public struct ImmersiveWelcomeView: View {
     @Environment(\.dismiss) private var dismiss
 
     /// 显示内容和样式配置
@@ -26,7 +26,7 @@ public struct WSFinalCutStyleWelcomeView: View {
         // 主内容
         VStack(spacing: 16) {
             Spacer()
-            
+
             // 顶部标题区域
             titleArea
 
@@ -79,13 +79,13 @@ public struct WSFinalCutStyleWelcomeView: View {
                     Image(imageName)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .overlay(Color.black.opacity(0.2)) // 半透明覆盖提高文本可读性
+                        .overlay(Color.black.opacity(0.2))  // 半透明覆盖提高文本可读性
                 } else {
-                    Color.black // 默认背景色
+                    Color.black  // 默认背景色
                 }
             }
         )
-        .ignoresSafeArea() // 忽略安全区域，实现全屏效果
+        .ignoresSafeArea()  // 忽略安全区域，实现全屏效果
     }
 
     // 标题区域
@@ -127,16 +127,16 @@ public struct WSFinalCutStyleWelcomeView: View {
 }
 
 // MARK: - 预览
-#Preview("Final Cut Style") {
-    WSFinalCutStyleWelcomeView(
-        config: finalCutPreviewConfig
+#Preview("immersive") {
+    ImmersiveWelcomeView(
+        config: ImmersivePreviewConfig
     )
 }
 
 // 预览配置
-private var finalCutPreviewConfig: WSWelcomeConfig {
+private var ImmersivePreviewConfig: WSWelcomeConfig {
     WSWelcomeConfig(
-        appName: "Final Cut Camera",
+        appName: "Final Cut ",
         features: [
             FeatureItem(
                 title: "功能介绍",

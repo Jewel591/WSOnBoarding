@@ -120,8 +120,8 @@ public struct WSOnBoardingExamples {
             )
     }
 
-    /// 直接使用沉浸式视图 (旧版FinalCut风格)
-    public static func finalCutStyleExample() -> some View {
+    /// 直接使用沉浸式视图
+    public static func ImmersiveStyleExample() -> some View {
         let config = WSWelcomeConfig(
             appName: "摄影大师",
             features: [
@@ -136,7 +136,7 @@ public struct WSOnBoardingExamples {
             continueButtonText: "开始体验"
         )
 
-        return WSFinalCutStyleWelcomeView(config: config)
+        return ImmersiveWelcomeView(config: config)
     }
 }
 

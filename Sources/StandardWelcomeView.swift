@@ -3,7 +3,7 @@ import os
 
 private let logger = Logger(
     subsystem: "com.weisen.WSOnBoarding",
-    category: "AppleWelcomeView"
+    category: "StandardWelcomeView"
 )
 
 /// 采用标准风格的欢迎页面
@@ -12,7 +12,7 @@ private let logger = Logger(
 /// - 顶部应用图标
 /// - 中部功能列表
 /// - 底部按钮和隐私政策链接
-public struct AppleTranslationStyleWelcomeView: View {
+public struct StandardWelcomeView: View {
     @Environment(\.dismiss) private var dismiss
 
     /// 显示内容和样式配置
@@ -168,7 +168,7 @@ struct FeatureRow: View {
 }
 
 // 用于Preview的示例数据
-extension AppleTranslationStyleWelcomeView {
+extension StandardWelcomeView {
     fileprivate static var previewConfig: WSWelcomeConfig {
         let features: [FeatureItem] = [
             FeatureItem(
@@ -206,7 +206,7 @@ extension AppleTranslationStyleWelcomeView {
 }
 
 // 另一个使用iconName的预览示例
-extension AppleTranslationStyleWelcomeView {
+extension StandardWelcomeView {
     fileprivate static var iconNamePreviewConfig: WSWelcomeConfig {
         return WSWelcomeConfig(
             appName: "图标示例",
@@ -218,7 +218,7 @@ extension AppleTranslationStyleWelcomeView {
 
     // 如需查看iconName效果，可以启用此预览
     static var iconNamePreview: some View {
-        AppleTranslationStyleWelcomeView(
+        StandardWelcomeView(
             config: iconNamePreviewConfig
         )
     }
@@ -245,20 +245,20 @@ extension AppleTranslationStyleWelcomeView {
     }
 
     static var singleFeaturePreview: some View {
-        AppleTranslationStyleWelcomeView(
+        StandardWelcomeView(
             config: singleFeatureConfig
         )
     }
 }
 
 #Preview("默认样式") {
-    AppleTranslationStyleWelcomeView(
-        config: AppleTranslationStyleWelcomeView.previewConfig,
+    StandardWelcomeView(
+        config: StandardWelcomeView.previewConfig,
     )
 }
 
 #Preview("单条功能项") {
-    AppleTranslationStyleWelcomeView(
-        config: AppleTranslationStyleWelcomeView.singleFeatureConfig
+    StandardWelcomeView(
+        config: StandardWelcomeView.singleFeatureConfig
     )
 }

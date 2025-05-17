@@ -4,18 +4,18 @@ import SwiftUI
 public struct WSWelcomeConfig {
     // 基本内容
     public var appName: String
-    
+
     // 介绍文本 (可选，显示在标题下方，features列表之前)
     public var introText: String?
-    
+
     // 功能列表
     public var features: [FeatureItem]
 
     // 图标配置
     public var iconSymbol: String?
     public var iconName: String?
-    
-    // 背景图片配置 (可选，用于FinalCut风格页面)
+
+    // 背景图片配置
     public var backgroundImageName: String?
 
     // 样式配置
@@ -25,7 +25,7 @@ public struct WSWelcomeConfig {
     // 文本配置
     public var continueButtonText: String = "继续"
     public var privacyButtonText: String? = nil
-    
+
     // 底部声明文本 (可选，显示在功能列表和按钮之间的小字体文本)
     public var disclaimerText: String?
 
@@ -42,7 +42,7 @@ public struct WSWelcomeConfig {
     ///   - features: 功能列表
     ///   - iconSymbol: SF Symbol图标名称 (可选)
     ///   - iconName: Assets中的图片名称 (可选)
-    ///   - backgroundImageName: 背景图片名称，用于FinalCut风格 (可选)
+    ///   - backgroundImageName: 背景图片名称
     ///   - primaryColor: 主要颜色 (默认为蓝色)
     ///   - secondaryColor: 次要颜色 (默认为靛蓝色)
     ///   - continueButtonText: 继续按钮文字 (默认为"继续")
@@ -51,7 +51,7 @@ public struct WSWelcomeConfig {
     ///   - privacyButtonText: 隐私政策按钮文字 (可选)
     ///   - privacyAction: 隐私政策按钮点击回调 (可选)
     public init(
-        appName: String, 
+        appName: String,
         introText: String? = nil,
         features: [FeatureItem],
         iconSymbol: String? = nil,

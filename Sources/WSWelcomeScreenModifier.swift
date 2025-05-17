@@ -17,18 +17,18 @@ public enum WSWelcomeStyle {
 public struct WSWelcomeScreenModifier: ViewModifier {
     @State private var showStandardWelcome: Bool = false
     @State private var showImmersiveWelcome: Bool = false
-    
+
     // 内容和样式配置
     let config: WSWelcomeConfig
-    
+
     // 欢迎页面样式
     let style: WSWelcomeStyle
-    
+
     // 欢迎页面标识符，可以为不同类型的欢迎页面设置不同的键
     let welcomeKey: String
 
     public init(
-        config: WSWelcomeConfig, 
+        config: WSWelcomeConfig,
         style: WSWelcomeStyle = .standard,
         welcomeKey: String = "hasSeenWelcomeView"
     ) {
@@ -49,7 +49,7 @@ public struct WSWelcomeScreenModifier: ViewModifier {
                     markWelcomeAsSeen()
                 }
             ) {
-                AppleTranslationStyleWelcomeView(config: config)
+                StandardWelcomeView(config: config)
             }
             // 沉浸式样式使用fullScreenCover展示
             .fullScreenCover(
@@ -58,7 +58,7 @@ public struct WSWelcomeScreenModifier: ViewModifier {
                     markWelcomeAsSeen()
                 }
             ) {
-                WSFinalCutStyleWelcomeView(config: config)
+                ImmersiveWelcomeView(config: config)
             }
     }
 
@@ -87,18 +87,24 @@ public struct WSWelcomeScreenModifier: ViewModifier {
 }
 
 // 便捷使用扩展
-public extension View {
+extension View {
     /// 添加欢迎页面
     /// - Parameters:
     ///   - config: 欢迎页面配置
     ///   - style: 欢迎页面样式 (.standard 或 .immersive)
     ///   - welcomeKey: UserDefaults键，用于跟踪是否已显示过欢迎页面
     /// - Returns: 修改后的视图
-    func wsWelcomeView(
+    public func wsWelcomeView(
         config: WSWelcomeConfig,
         style: WSWelcomeStyle = .standard,
         welcomeKey: String = "hasSeenWelcomeView"
     ) -> some View {
-        self.modifier(WSWelcomeScreenModifier(config: config, style: style, welcomeKey: welcomeKey))
+        self.modifier(
+            WSWelcomeScreenModifier(
+                config: config,
+                style: style,
+                welcomeKey: welcomeKey
+            )
+        )
     }
-} 
+}

@@ -38,7 +38,8 @@ public struct WSOnBoardingExamples {
             introText: "这是一款集简洁、高效、智能于一体的应用，为您提供最佳的用户体验和功能体验。",
             features: features,
             iconSymbol: "app.gift.fill",
-            primaryColor: .blue
+            primaryColor: .blue,
+            disclaimerText: "您的设备信息、搜索历史和应用内活动可能会被用于改善应用体验和提供个性化内容。我们重视您的隐私，详情请查看隐私政策。"
         )
     }
     
@@ -51,6 +52,7 @@ public struct WSOnBoardingExamples {
             features: createBasicConfig().features,
             iconSymbol: "app.gift.fill",
             primaryColor: .blue,
+            disclaimerText: "通过继续使用，您确认已阅读并同意我们的使用条款和隐私政策。您可以随时在设置中更改您的隐私选项。",
             customTitle: "欢迎使用我们的应用",
             privacyButtonText: "查看隐私政策",
             privacyAction: {

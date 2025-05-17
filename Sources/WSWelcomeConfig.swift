@@ -22,6 +22,9 @@ public struct WSWelcomeConfig {
     // 文本配置
     public var continueButtonText: String = "继续"
     public var privacyButtonText: String? = nil
+    
+    // 底部声明文本 (可选，显示在功能列表和按钮之间的小字体文本)
+    public var disclaimerText: String?
 
     // 自定义标题(可选，默认为 "欢迎使用 \"[appName]\"")
     public var customTitle: String? = nil
@@ -39,6 +42,7 @@ public struct WSWelcomeConfig {
     ///   - primaryColor: 主要颜色 (默认为蓝色)
     ///   - secondaryColor: 次要颜色 (默认为靛蓝色)
     ///   - continueButtonText: 继续按钮文字 (默认为"继续")
+    ///   - disclaimerText: 底部声明文本，显示在功能列表和按钮之间 (可选)
     ///   - customTitle: 自定义标题 (可选)
     ///   - privacyButtonText: 隐私政策按钮文字 (可选)
     ///   - privacyAction: 隐私政策按钮点击回调 (可选)
@@ -51,6 +55,7 @@ public struct WSWelcomeConfig {
         primaryColor: Color = .blue,
         secondaryColor: Color = .indigo,
         continueButtonText: String = "继续",
+        disclaimerText: String? = nil,
         customTitle: String? = nil,
         privacyButtonText: String? = nil,
         privacyAction: (() -> Void)? = nil
@@ -63,6 +68,7 @@ public struct WSWelcomeConfig {
         self.primaryColor = primaryColor
         self.secondaryColor = secondaryColor
         self.continueButtonText = continueButtonText
+        self.disclaimerText = disclaimerText
         self.customTitle = customTitle
         self.privacyButtonText = privacyButtonText
         self.privacyAction = privacyAction

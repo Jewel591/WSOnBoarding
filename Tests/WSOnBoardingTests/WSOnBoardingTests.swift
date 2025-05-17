@@ -77,6 +77,7 @@ final class WSOnBoardingTests: XCTestCase {
     func testWelcomeConfigWithAllParameters() {
         // 测试所有参数都设置的情况
         let introText = "这是一段介绍文本，用于说明应用的功能和数据使用情况。"
+        let disclaimerText = "这是底部声明文本，通常用于说明隐私政策和数据使用。"
         let config = WSWelcomeConfig(
             appName: "完整测试",
             introText: introText,
@@ -86,6 +87,7 @@ final class WSOnBoardingTests: XCTestCase {
             primaryColor: .red,
             secondaryColor: .green,
             continueButtonText: "开始使用",
+            disclaimerText: disclaimerText,
             customTitle: "全功能测试",
             privacyButtonText: "隐私条款",
             privacyAction: {}
@@ -96,6 +98,7 @@ final class WSOnBoardingTests: XCTestCase {
         XCTAssertEqual(config.iconSymbol, "gear")
         XCTAssertEqual(config.iconName, "customIcon")
         XCTAssertEqual(config.continueButtonText, "开始使用")
+        XCTAssertEqual(config.disclaimerText, disclaimerText)
         XCTAssertEqual(config.titleText, "全功能测试")
         XCTAssertEqual(config.privacyButtonText, "隐私条款")
         XCTAssertNotNil(config.privacyAction)

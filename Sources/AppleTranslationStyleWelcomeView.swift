@@ -60,6 +60,18 @@ public struct AppleTranslationStyleWelcomeView: View {
 
             Spacer()
 
+            // 底部声明文本 - 小字体说明
+            if let disclaimerText = config.disclaimerText {
+                VStack {
+                    Text(disclaimerText)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 20)
+                }
+            }
+
             // 底部区域
             VStack(spacing: 16) {
                 Button {
@@ -93,7 +105,7 @@ public struct AppleTranslationStyleWelcomeView: View {
             Rectangle()
                 .frame(width: 40, height: 5)
                 .cornerRadius(2.5)
-                .foregroundColor(.secondary.opacity(0.3))
+                .foregroundColor(.clear)
                 .padding(.bottom, 8)
         }
     }
@@ -163,7 +175,9 @@ extension AppleTranslationStyleWelcomeView {
             features: features,
             // 如果要测试iconName，可以取消下面这行的注释并提供一个Assets中存在的图片名称
             // iconName: "YourAppIcon",
-            iconSymbol: "camera.viewfinder"
+            iconSymbol: "camera.viewfinder",
+            disclaimerText: "您的设备信息和使用数据将用于提供个性化体验，改进应用功能和防止欺诈。查看详细隐私政策了解更多信息。"
+                //            iconName: "AppIcon"
         )
     }
 }
@@ -175,10 +189,10 @@ extension AppleTranslationStyleWelcomeView {
             appName: "图标示例",
             introText: "这个示例展示了使用Assets中图标的效果",
             features: [],
-            iconName: "AppIconPreview" // 需要在Assets中添加这个图标
+            iconName: "AppIconPreview"  // 需要在Assets中添加这个图标
         )
     }
-    
+
     // 如需查看iconName效果，可以启用此预览
     static var iconNamePreview: some View {
         AppleTranslationStyleWelcomeView(

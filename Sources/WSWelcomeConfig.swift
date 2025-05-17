@@ -14,6 +14,9 @@ public struct WSWelcomeConfig {
     // 图标配置
     public var iconSymbol: String?
     public var iconName: String?
+    
+    // 背景图片配置 (可选，用于FinalCut风格页面)
+    public var backgroundImageName: String?
 
     // 样式配置
     public var primaryColor: Color = .blue
@@ -39,6 +42,7 @@ public struct WSWelcomeConfig {
     ///   - features: 功能列表
     ///   - iconSymbol: SF Symbol图标名称 (可选)
     ///   - iconName: Assets中的图片名称 (可选)
+    ///   - backgroundImageName: 背景图片名称，用于FinalCut风格 (可选)
     ///   - primaryColor: 主要颜色 (默认为蓝色)
     ///   - secondaryColor: 次要颜色 (默认为靛蓝色)
     ///   - continueButtonText: 继续按钮文字 (默认为"继续")
@@ -52,6 +56,7 @@ public struct WSWelcomeConfig {
         features: [FeatureItem],
         iconSymbol: String? = nil,
         iconName: String? = nil,
+        backgroundImageName: String? = nil,
         primaryColor: Color = .blue,
         secondaryColor: Color = .indigo,
         continueButtonText: String = "继续",
@@ -65,6 +70,7 @@ public struct WSWelcomeConfig {
         self.features = features
         self.iconSymbol = iconSymbol
         self.iconName = iconName
+        self.backgroundImageName = backgroundImageName
         self.primaryColor = primaryColor
         self.secondaryColor = secondaryColor
         self.continueButtonText = continueButtonText

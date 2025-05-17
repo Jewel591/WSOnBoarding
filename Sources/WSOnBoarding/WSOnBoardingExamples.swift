@@ -2,13 +2,17 @@ import SwiftUI
 
 /// 示例代码，展示如何使用 WSOnBoarding 包
 public struct WSOnBoardingExamples {
-    
+
     /// 基本用法示例
     public static func basicExample() -> some View {
         ExampleContentView()
-            .wsWelcomeView(config: createBasicConfig())
+            .wsWelcomeView(
+                config: createBasicConfig(),
+                style: .immersive,
+                welcomeKey: "123"
+            )
     }
-    
+
     /// 创建基本配置
     public static func createBasicConfig() -> WSWelcomeConfig {
         let features: [FeatureItem] = [
@@ -29,9 +33,9 @@ public struct WSOnBoardingExamples {
                 icon: "hand.thumbsup.fill",
                 title: "用户体验",
                 color: .green
-            )
+            ),
         ]
-        
+
         // 使用增强的初始化器
         return WSWelcomeConfig(
             appName: "示例应用",
@@ -39,10 +43,11 @@ public struct WSOnBoardingExamples {
             features: features,
             iconSymbol: "app.gift.fill",
             primaryColor: .blue,
-            disclaimerText: "您的设备信息、搜索历史和应用内活动可能会被用于改善应用体验和提供个性化内容。我们重视您的隐私，详情请查看隐私政策。"
+            disclaimerText:
+                "您的设备信息、搜索历史和应用内活动可能会被用于改善应用体验和提供个性化内容。我们重视您的隐私，详情请查看隐私政策。"
         )
     }
-    
+
     /// 自定义配置示例
     public static func customizedExample() -> some View {
         // 使用增强的初始化器设置所有自定义属性
@@ -60,14 +65,14 @@ public struct WSOnBoardingExamples {
                 print("用户点击了隐私政策按钮")
             }
         )
-        
+
         return ExampleContentView()
             .wsWelcomeView(
                 config: config,
                 welcomeKey: "customWelcome"
             )
     }
-    
+
     /// 极简风格的示例
     public static func minimalExample() -> some View {
         // 创建一个极简的特性列表
@@ -79,17 +84,59 @@ public struct WSOnBoardingExamples {
             FeatureItem(
                 title: "专注内容",
                 color: .gray
-            )
+            ),
         ]
-        
+
         let config = WSWelcomeConfig(
             appName: "极简应用",
             features: features,
             primaryColor: .black
         )
-        
+
         return ExampleContentView()
             .wsWelcomeView(config: config)
+    }
+
+    /// 沉浸式样式示例
+    public static func immersiveStyleExample() -> some View {
+        let config = WSWelcomeConfig(
+            appName: "摄影大师",
+            features: [
+                FeatureItem(
+                    title: "功能介绍",
+                    description: "专业的摄影控制工具，提供全面的手动选项，连接云端实现实时编辑和分享，一键创作出精彩瞬间。",
+                    color: .blue
+                )
+            ],
+            backgroundImageName: "PhotoBackground",  // 需要在Assets中添加对应图片
+            primaryColor: .indigo,
+            continueButtonText: "开始体验"
+        )
+
+        return ExampleContentView()
+            .wsWelcomeView(
+                config: config,
+                style: .immersive
+            )
+    }
+
+    /// 直接使用沉浸式视图 (旧版FinalCut风格)
+    public static func finalCutStyleExample() -> some View {
+        let config = WSWelcomeConfig(
+            appName: "摄影大师",
+            features: [
+                FeatureItem(
+                    title: "功能介绍",
+                    description: "专业的摄影控制工具，提供全面的手动选项，连接云端实现实时编辑和分享，一键创作出精彩瞬间。",
+                    color: .blue
+                )
+            ],
+            backgroundImageName: "PhotoBackground",  // 需要在Assets中添加对应图片
+            primaryColor: .indigo,
+            continueButtonText: "开始体验"
+        )
+
+        return WSFinalCutStyleWelcomeView(config: config)
     }
 }
 
@@ -107,4 +154,4 @@ private struct ExampleContentView: View {
 
 #Preview {
     WSOnBoardingExamples.basicExample()
-} 
+}

@@ -6,6 +6,12 @@ private let logger = Logger(
     category: "AppleWelcomeView"
 )
 
+/// 采用标准风格的欢迎页面
+/// 特点：
+/// - 白色背景
+/// - 顶部应用图标
+/// - 中部功能列表
+/// - 底部按钮和隐私政策链接
 public struct AppleTranslationStyleWelcomeView: View {
     @Environment(\.dismiss) private var dismiss
 
@@ -247,7 +253,7 @@ extension AppleTranslationStyleWelcomeView {
 
 #Preview("默认样式") {
     AppleTranslationStyleWelcomeView(
-        config: AppleTranslationStyleWelcomeView.previewConfig
+        config: AppleTranslationStyleWelcomeView.previewConfig,
     )
 }
 

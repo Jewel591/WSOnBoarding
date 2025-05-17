@@ -101,6 +101,26 @@ struct ContentView: View {
 
 ## 高级用法
 
+### 欢迎页面样式选择
+
+包支持两种不同风格的欢迎页面：
+
+```swift
+// 标准样式（默认）- 白底，图标+功能列表
+.wsWelcomeView(
+    config: myConfig,
+    style: .standard  // 默认值，可省略
+)
+
+// 沉浸式样式 - 全屏背景图片，底部描述
+.wsWelcomeView(
+    config: myConfig,
+    style: .immersive
+)
+```
+
+标准样式适合展示多个功能项，而沉浸式样式更适合创建视觉冲击力强的欢迎页面。使用沉浸式样式时，建议在配置中提供`backgroundImageName`以设置背景图片。
+
 ### 自定义显示逻辑
 
 ```swift

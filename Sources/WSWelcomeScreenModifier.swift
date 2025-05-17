@@ -6,17 +6,33 @@ private let logger = Logger(
     category: "WelcomeScreen"
 )
 
+/// 欢迎页面样式
+public enum WSWelcomeStyle {
+    /// 标准样式（默认）- 白底，图标+功能列表
+    case standard
+    /// 沉浸式样式 - 全屏背景图片，底部描述
+    case immersive
+}
+
 public struct WSWelcomeScreenModifier: ViewModifier {
     @State private var showWelcome: Bool = false
     
     // 内容和样式配置
     let config: WSWelcomeConfig
     
+    // 欢迎页面样式
+    let style: WSWelcomeStyle
+    
     // 欢迎页面标识符，可以为不同类型的欢迎页面设置不同的键
     let welcomeKey: String
 
-    public init(config: WSWelcomeConfig, welcomeKey: String = "hasSeenWelcomeView") {
+    public init(
+        config: WSWelcomeConfig, 
+        style: WSWelcomeStyle = .standard,
+        welcomeKey: String = "hasSeenWelcomeView"
+    ) {
         self.config = config
+        self.style = style
         self.welcomeKey = welcomeKey
     }
 
@@ -31,8 +47,19 @@ public struct WSWelcomeScreenModifier: ViewModifier {
                     markWelcomeAsSeen()
                 }
             ) {
-                AppleTranslationStyleWelcomeView(config: config)
+                welcomeView
             }
+    }
+    
+    /// 根据选择的样式返回对应的欢迎页面
+    @ViewBuilder
+    private var welcomeView: some View {
+        switch style {
+        case .standard:
+            AppleTranslationStyleWelcomeView(config: config)
+        case .immersive:
+            WSFinalCutStyleWelcomeView(config: config)
+        }
     }
 
     private func checkAndShowWelcome() {
@@ -58,12 +85,14 @@ public extension View {
     /// 添加欢迎页面
     /// - Parameters:
     ///   - config: 欢迎页面配置
+    ///   - style: 欢迎页面样式 (.standard 或 .immersive)
     ///   - welcomeKey: UserDefaults键，用于跟踪是否已显示过欢迎页面
     /// - Returns: 修改后的视图
     func wsWelcomeView(
         config: WSWelcomeConfig,
+        style: WSWelcomeStyle = .standard,
         welcomeKey: String = "hasSeenWelcomeView"
     ) -> some View {
-        self.modifier(WSWelcomeScreenModifier(config: config, welcomeKey: welcomeKey))
+        self.modifier(WSWelcomeScreenModifier(config: config, style: style, welcomeKey: welcomeKey))
     }
 } 

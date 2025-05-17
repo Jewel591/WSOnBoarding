@@ -9,9 +9,7 @@
 - 自动管理显示逻辑
 - 跨设备同步（即将推出）
 
-## 截图预览
-
-![](./Sources/images/Apple-Vision-Pro-Apple-Immersive-Video-Boundless-Arctic-Surfing_big.jpg.large_2x.jpg)
+![](./Sources/images/256shots_so.png)
 
 ## 安装
 
@@ -42,7 +40,7 @@ extension WSWelcomeConfig {
     /// 应用的欢迎页配置
     static var welcomeInfo: WSWelcomeConfig {
         return WSWelcomeConfig(
-            appName: "VLMind",
+            appName: "VLMind", // 显示的应用名称
             introText: nil,
             features: [
                 FeatureItem(
@@ -65,7 +63,7 @@ extension WSWelcomeConfig {
                 ),
             ],
             iconSymbol: "camera.viewfinder",
-            iconName: "AppIcon",
+            iconName: "AppIcon", // 应用图标图片文件名称
             backgroundImageName: nil,
             primaryColor: .blue,
             continueButtonText: "继续",
@@ -109,7 +107,170 @@ struct YourApp: App {
 
 ![](./Sources/images/411shots_so.png)
 
-## 配置选项
+## 设置显示图标
+
+`.wsWelcomeView()` 支持通过 `iconName` 或 `iconSymbol` 参数设置显示的图标。
+
+`iconName` 的优先级高于`iconSymbol`。
+
+### 使用 App 应用图标
+
+1. 在项目的 Assets 中添加 App 图标图片（例如 AppIcon）
+
+2. 在 WelcomeConfig.swift 文件中，设置 `iconName`
+
+```swift
+iconName: "AppIcon", // 应用图标图片文件名称
+```
+
+### 使用 SF 符号
+
+通过设置 `iconSymbol` 参数，提供 SF 符号名称。
+
+```swift
+iconSymbol: "camera.viewfinder"
+```
+
+### 设置图标颜色
+
+通过设置 `primaryColor` 参数，提供 Color。
+
+```swift
+primaryColor: .blue
+```
+
+`primaryColor` 会影响底部 Button 和顶部图标的颜色，它们总是使用相同的颜色。
+
+![](./Sources/images/723shots_so.png)
+
+## 设置描述内容
+
+通过 introText 参数，可以设置用于显示的描述内容。
+
+```swift
+introText:"所有处理均在本地完成，无需网络连接，确保在任何环境下都能稳定运行。",
+```
+
+![](./Sources/images/412shots_so.png)
+
+## 设置功能亮点
+
+### 带图标的列表
+
+通过 features 参数，设置要显示的功能列表。
+
+```swift
+features: [
+    FeatureItem(
+        icon: "photo.on.rectangle",
+        title: "视觉识别",
+        description: "选取并识别图像中的内容。",
+        color: .blue
+    ),
+    FeatureItem(
+        icon: "bolt.fill",
+        title: "毫秒级响应",
+        description: "超快速分析，无需等待即可获得结果。",
+        color: .orange
+    ),
+    FeatureItem(
+        icon: "wifi.slash",
+        title: "离线支持",
+        description: "无需联网，在本地设备上完成所有处理。",
+        color: .green
+    ),
+],
+```
+
+### 不显示图标
+
+如果不显示图标，将 `icon` 设置为 `nil` 。
+
+```swift
+FeatureItem(
+    icon: nil,
+    title: "视觉识别",
+    description: "选取并识别图像中的内容。",
+    color: .blue
+),
+```
+
+### 不使用列表
+
+如果 features 只有一个 FeatureItem，将自动隐藏 icon 和 title，仅显示 description。并自定居中显示。
+
+通过 `\n` 实现换行。
+
+```
+features: [
+    FeatureItem(
+        icon: "photo.on.rectangle",
+        title: "视觉识别",
+        description: "让图像识别变得前所未有的高效与便捷。无论是识别照片中的人物、物体还是文字内容，应用都能在毫秒之间完成分析。所有处理均在本地完成，无需网络连接，既保障隐私，又确保在任何环境下都能稳定运行。\n\n立即体验 VLMind，让视觉感知成为你的得力助手。",
+        color: .blue
+    ),
+]
+```
+
+![](./Sources/images/779shots_so.png)
+
+## 设置页面样式
+
+通过 style 参数，选择预设的样式。
+
+### standard 模式
+
+标准样式适合展示多个功能亮点。
+
+```swift
+// 标准样式（默认）- 白底，图标+功能列表
+.wsWelcomeView(
+    config: WSWelcomeConfig.welcomeInfo,
+    style: .standard  // 默认值，可省略
+)
+
+// 沉浸式样式 - 全屏背景图片，底部描述
+.wsWelcomeView(
+    config: WSWelcomeConfig.welcomeInfo,
+    style: .immersive
+)
+```
+
+### immersive 模式
+
+沉浸式样式，适合创建视觉冲击力更强的欢迎页面，仅显示少量信息。
+
+在 immersive 模式下，可以通过 backgroundImageName 参数设置背景图片。
+
+```swift
+ backgroundImageName: "welcomeBackgroundImage", // 在 Assets 中添加图片
+```
+
+![](./Sources/images/576shots_so.png)
+
+## 重置显示状态
+
+.wsWelcomeView 通过 `welcomeKey` 判断显示状态。
+
+如果在新版本中希望重置显示状态，更新 `welcomeKey` 为其他任意值即可。
+
+```swift
+// 使用自定义键控制显示逻辑
+.wsWelcomeView(
+    config: myConfig,
+    welcomeKey: "customWelcomeKey"  
+)
+```
+
+## 系统要求
+
+- iOS 15.0+
+- iPadOS 15.0+
+- macOS 12.0+
+- Swift 5.5+
+- Xcode 13.0+
+
+## 参数说明
 
 `WSWelcomeConfig`提供多种配置选项来自定义欢迎页面：
 
@@ -144,72 +305,6 @@ struct YourApp: App {
 | disclaimerText | String? | 底部声明文本 |
 | privacyButtonText | String? | 隐私政策按钮文字 |
 | privacyAction | (() -> Void)? | 点击隐私政策的回调 |
-
-## 高级用法
-
-### 欢迎页面样式选择
-
-包支持两种不同风格的欢迎页面：
-
-```swift
-// 标准样式（默认）- 白底，图标+功能列表
-.wsWelcomeView(
-    config: myConfig,
-    style: .standard  // 默认值，可省略
-)
-
-// 沉浸式样式 - 全屏背景图片，底部描述
-.wsWelcomeView(
-    config: myConfig,
-    style: .immersive
-)
-```
-
-标准样式适合展示多个功能项，而沉浸式样式更适合创建视觉冲击力强的欢迎页面。使用沉浸式样式时，建议在配置中提供`backgroundImageName`以设置背景图片。
-
-### 自定义显示逻辑
-
-```swift
-// 使用自定义键控制显示逻辑
-.wsWelcomeView(
-    config: myConfig,
-    welcomeKey: "customWelcomeKey"  // 默认为"hasSeenWelcomeView"
-)
-```
-
-### 不同风格的功能项
-
-```swift
-// 带图标和描述
-FeatureItem(
-    icon: "star.fill", 
-    title: "完整风格", 
-    description: "包含所有元素", 
-    color: .blue
-)
-
-// 不带图标
-FeatureItem(
-    title: "无图标风格", 
-    description: "仅显示文本", 
-    color: .green
-)
-
-// 不带描述
-FeatureItem(
-    icon: "gear", 
-    title: "简洁风格", 
-    color: .orange
-)
-```
-
-## 系统要求
-
-- iOS 15.0+
-- iPadOS 15.0+
-- macOS 12.0+
-- Swift 5.5+
-- Xcode 13.0+
 
 ## 许可证
 

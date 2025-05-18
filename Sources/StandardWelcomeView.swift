@@ -14,6 +14,7 @@ private let logger = Logger(
 /// - 底部按钮和隐私政策链接
 public struct StandardWelcomeView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
 
     /// 显示内容和样式配置
     var config: WSWelcomeConfig
@@ -86,7 +87,7 @@ public struct StandardWelcomeView: View {
             // 底部声明文本 - 小字体说明
             if let disclaimerText = config.disclaimerText {
                 VStack {
-                    Text(disclaimerText)
+                    MarkdownLinkText(text: disclaimerText)
                         .font(.caption2)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)

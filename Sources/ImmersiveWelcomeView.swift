@@ -37,7 +37,7 @@ public struct ImmersiveWelcomeView: View {
 
             // 底部声明文本
             if let disclaimerText = config.disclaimerText {
-                Text(disclaimerText)
+                MarkdownLinkText(text: disclaimerText)
                     .font(.caption2)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)

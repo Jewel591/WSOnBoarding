@@ -23,19 +23,35 @@ public struct StandardWelcomeView: View {
         self.config = config
     }
 
+    @ViewBuilder
+    private var topArea: some View {
+        switch config.pageType {
+        case .whatsNew:
+            HStack {
+                Text("新")
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 2)
+                    .background(Color.orange)
+                    .cornerRadius(10)
+                Spacer()
+            }
+            .padding(.leading, 24)
+            .frame(height: 70) // 保持与图标区域高度一致
+        case .welcome:
+            VStack {
+                Spacer().frame(height: 40)
+                WSWelcomeIconView(config: config)
+                Spacer().frame(height: 30)
+            }
+        }
+    }
+
     public var body: some View {
         VStack(spacing: 0) {
-            // 顶部App图标
-            VStack {
-                Spacer()
-                    .frame(height: 40)
-
-                // 使用独立的图标组件
-                WSWelcomeIconView(config: config)
-
-                Spacer()
-                    .frame(height: 30)
-            }
+            topArea
 
             // 标题区域
             VStack(spacing: 20) {

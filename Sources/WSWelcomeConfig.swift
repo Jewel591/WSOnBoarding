@@ -1,5 +1,12 @@
 import SwiftUI
 
+/// 页面类型枚举
+public enum WSWelcomePageType {
+    case welcome
+    case whatsNew
+    // 未来可扩展更多类型
+}
+
 /// 欢迎页面的配置对象，专注于内容和样式的配置
 public struct WSWelcomeConfig {
     // 基本内容
@@ -35,6 +42,9 @@ public struct WSWelcomeConfig {
     // 回调
     public var privacyAction: (() -> Void)? = nil
 
+    // 页面类型，默认为欢迎页
+    public var pageType: WSWelcomePageType = .welcome
+
     /// 创建欢迎页面配置
     /// - Parameters:
     ///   - appName: 应用名称
@@ -50,6 +60,7 @@ public struct WSWelcomeConfig {
     ///   - customTitle: 自定义标题 (可选)
     ///   - privacyButtonText: 隐私政策按钮文字 (可选)
     ///   - privacyAction: 隐私政策按钮点击回调 (可选)
+    ///   - pageType: 页面类型 (默认为欢迎页)
     public init(
         appName: String,
         introText: String? = nil,
@@ -63,7 +74,8 @@ public struct WSWelcomeConfig {
         disclaimerText: String? = nil,
         customTitle: String? = nil,
         privacyButtonText: String? = nil,
-        privacyAction: (() -> Void)? = nil
+        privacyAction: (() -> Void)? = nil,
+        pageType: WSWelcomePageType = .welcome
     ) {
         self.appName = appName
         self.introText = introText
@@ -78,11 +90,17 @@ public struct WSWelcomeConfig {
         self.customTitle = customTitle
         self.privacyButtonText = privacyButtonText
         self.privacyAction = privacyAction
+        self.pageType = pageType
     }
 
     /// 获取显示的标题文本
     public var titleText: String {
-        return customTitle ?? "欢迎使用 \"\(appName)\""
+        switch pageType {
+        case .welcome:
+            return customTitle ?? "欢迎使用 “\(appName)”"
+        case .whatsNew:
+            return "“\(appName)” 新功能"
+        }
     }
 
     /// 获取隐私政策文本（如果有）

@@ -51,7 +51,8 @@ public struct WSWelcomeScreenModifier: ViewModifier {
             ) {
                 StandardWelcomeView(config: config)
             }
-            // 沉浸式样式使用fullScreenCover展示
+            // 沉浸式样式：iOS使用fullScreenCover，macOS使用sheet
+            #if os(iOS)
             .fullScreenCover(
                 isPresented: $showImmersiveWelcome,
                 onDismiss: {
@@ -60,6 +61,16 @@ public struct WSWelcomeScreenModifier: ViewModifier {
             ) {
                 ImmersiveWelcomeView(config: config)
             }
+            #else
+            .sheet(
+                isPresented: $showImmersiveWelcome,
+                onDismiss: {
+                    markWelcomeAsSeen()
+                }
+            ) {
+                ImmersiveWelcomeView(config: config)
+            }
+            #endif
     }
 
     private func checkAndShowWelcome() {
